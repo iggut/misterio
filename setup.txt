@@ -1,0 +1,84 @@
+sudo -i
+MNTPOINT=/mnt
+cryptsetup luksOpen /dev/nvme1n1p2 enc
+
+# Format partitions
+mkfs.fat -F 32 -n boot /dev/nvme1n1p1
+mkswap -L swap /dev/lvm/swap
+swapon /dev/lvm/swap
+mkfs.btrfs -L root /dev/lvm/root
+
+mount -t btrfs /dev/lvm/root /mnt
+# Create the subvolumes
+btrfs subvolume create /mnt/root
+btrfs subvolume create /mnt/persist
+btrfs subvolume create /mnt/nix
+
+umount /mnt
+
+# Mount the directories
+mount -o subvol=root,compress=zstd,noatime /dev/lvm/root /mnt
+mkdir -p /mnt/persist/var/{log,lib/{nixos,systemd}}
+mount -o subvol=persist,compress=zstd /dev/lvm/root /mnt/persist
+mount -o subvol=nix,compress=zstd,noatime /dev/lvm/root /mnt/nix
+
+# Mount boot partition
+mkdir /mnt/boot
+mount /dev/nvme1n1p1 /mnt/boot
+
+nix-shell -p nixFlakes
+sudo nixos-install --flake /home/iggut/nix-config-main#gaminix
+
+home-manager switch --flake /home/iggut/nix-config-main#gaminix
+
+home-manager switch --flake 'github:rxyhn/yuki#rxyhn@lenovo'
+
+[nix-shell:~]# sudo nixos-install --flake /home/nixos/nix-config-main#gaminix
+copying channel...
+building the flake in path:/home/nixos/nix-config-main?lastModified=1687639554&narHash=sha256-%2fCtTmmdvHJ13TOoGDmL+LkEZHsHn2XEK4pmpoj+emtA=...
+installing the boot loader...
+setting up secrets for users...
+/nix/store/49nwpinfb8r5zx34qw92ly341jjy2izw-sops-install-secrets-0.0.1/bin/sops-install-secrets: Cannot read ssh key '/persist/etc/ssh/ssh_host_ed25519_key': open /persist/etc/ssh/ssh_host_ed25519_key: no such file or directory
+Activation script snippet 'setupSecretsForUsers' failed (1)
+warning: password file ‘/run/secrets-for-users/iggut-password’ does not exist
+Warning: Source directory '/persist/var' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+Warning: Source directory '/persist/var/lib' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+Warning: Source directory '/persist/var/lib/acme' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+Warning: Source directory '/persist/var/lib/systemd' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+Warning: Source directory '/persist/var/lib/nixos' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+Warning: Source directory '/persist/var/log' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+Warning: Source directory '/persist/srv' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+Warning: Source directory '/persist/var/lib/containers' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+Warning: Source directory '/persist/var/lib/tailscale' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
+setting up /etc...
+Initializing machine ID from random generator.
+Created "/boot/EFI".
+Created "/boot/EFI/systemd".
+Created "/boot/EFI/BOOT".
+Created "/boot/loader".
+Created "/boot/loader/entries".
+Created "/boot/EFI/Linux".
+Copied "/nix/store/9adpz6y8s4mgkxfhc9rzy25r7f3wdyll-systemd-253.5/lib/systemd/boot/efi/systemd-bootx64.efi" to "/boot/EFI/systemd/systemd-bootx64.efi".
+Copied "/nix/store/9adpz6y8s4mgkxfhc9rzy25r7f3wdyll-systemd-253.5/lib/systemd/boot/efi/systemd-bootx64.efi" to "/boot/EFI/BOOT/BOOTX64.EFI".
+Random seed file /boot/loader/random-seed successfully written (32 bytes).
+Successfully initialized system token in EFI variable with 32 bytes.
+Created EFI boot entry "Linux Boot Manager".
+setting up secrets for users...
+/nix/store/49nwpinfb8r5zx34qw92ly341jjy2izw-sops-install-secrets-0.0.1/bin/sops-install-secrets: Cannot read ssh key '/persist/etc/ssh/ssh_host_ed25519_key': open /persist/etc/ssh/ssh_host_ed25519_key: no such file or directory
+Activation script snippet 'setupSecretsForUsers' failed (1)
+warning: password file ‘/run/secrets-for-users/iggut-password’ does not exist
+setting up /etc...
+setting up secrets for users...
+/nix/store/49nwpinfb8r5zx34qw92ly341jjy2izw-sops-install-secrets-0.0.1/bin/sops-install-secrets: Cannot read ssh key '/persist/etc/ssh/ssh_host_ed25519_key': open /persist/etc/ssh/ssh_host_ed25519_key: no such file or directory
+Activation script snippet 'setupSecretsForUsers' failed (1)
+warning: password file ‘/run/secrets-for-users/iggut-password’ does not exist
+setting up /etc...
+setting root password...
+New password: 
+Retype new password: 
+passwd: password updated successfully
+installation finished!
+
+
+
+
