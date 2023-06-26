@@ -37,6 +37,21 @@ in
   programs = {
     home-manager.enable = true;
     git.enable = true;
+    nm-applet.enable = true; # Network manager tray icon
+  };
+
+  programs.xfconf.enable = true;
+
+  services = {
+    gnome.gnome-keyring.enable = true;
+    flatpak.enable = true;
+    printing.enable = true;
+    printing.drivers = [
+      #pkgs.cnijfilter2
+      #pkgs.cnijfilter_4_00
+      pkgs.gutenprint
+      pkgs.gutenprintBin
+    ];
   };
 
   home = {

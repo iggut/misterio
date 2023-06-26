@@ -1,26 +1,5 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [ 
-    age-plugin-yubikey
-    google-chrome # Hate it and love it Browser
-    glxinfo
-    android-tools # Tools for debugging android devices
-    appimage-run # Appimage runner
-    vlc # Video player
-    neofetch # pc info
-    mullvad-vpn # VPN Client
-    nwg-drawer
-    ntfs3g # Support NTFS drives
-    sfwbar
-    yubikey-manager
-    yubikey-manager-qt
-    yubioath-flutter
-    yubico-pam
-    yubikey-personalization
-    wget
-    gimp
-    qbittorrent
-    usbutils
-    vulkan-tools
     (vscode-with-extensions.override {
       vscodeExtensions = with vscode-extensions;
         [

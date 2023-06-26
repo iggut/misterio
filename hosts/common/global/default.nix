@@ -32,6 +32,46 @@
 
   environment.enableAllTerminfo = true;
 
+  # Automatically tune nice levels
+  services.ananicy = {
+    enable = true;
+    package = pkgs.ananicy-cpp;
+  };
+
+  # Get notifications about earlyoom actions
+  services.systembus-notify.enable = true;
+
+  # 90% ZRAM as swap
+  zramSwap = {
+    algorithm = "zstd";
+    enable = true;
+    memoryPercent = 90;
+  };
+
+  # Earlyoom to prevent OOM situations
+  services.earlyoom = {
+    enable = true;
+    enableNotifications = true;
+    freeMemThreshold = 5;
+  };
+
+  # Mullvad VPN
+  services.mullvad-vpn.enable = true;
+
+  # Enable the smartcard daemon
+  hardware.gpgSmartcards.enable = true;
+  services.pcscd.enable = true;
+  services.udev.packages = [pkgs.yubikey-personalization];
+  
+  # Configure as challenge-response for instant login,
+  # can't provide the secrets as the challenge gets updated
+  security.pam.yubico = {
+    debug = true;
+    enable = true;
+    mode = "challenge-response";
+    id = [ "23911227" ];
+  };
+
   hardware.enableRedistributableFirmware = true;
   #networking.domain = "m7.rs"; #todo
 
