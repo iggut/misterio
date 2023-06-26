@@ -68,7 +68,8 @@ home-manager switch --flake 'github:iggut/misterio#iggut@gaminix'
 sudo nixos-install --flake 'github:iggut/misterio#gs66'
 home-manager switch --flake 'github:iggut/misterio#iggut@gs66'
 
-# Local
+# Local install nixos from flake
+
 sudo nixos-install --flake /home/nixos/nix-config-main#gaminix
 home-manager switch --flake /home/nixos/nix-config-main#iggut@gaminix
 
