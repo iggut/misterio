@@ -44,9 +44,12 @@
     wlr.enable = true;
   };
   hardware = {
+    nvidia = {
+      prime.offload.enable = true;
+      modesetting.enable = true;
+    };
     opengl = {
       enable = true;
-      extraPackages = with pkgs; [ amdvlk ];
       driSupport = true;
       driSupport32Bit = true;
     };
