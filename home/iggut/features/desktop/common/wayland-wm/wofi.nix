@@ -6,9 +6,9 @@ let
     ];
   });
 
-  pass = config.programs.password-store.package;
-  passEnabled = config.programs.password-store.enable;
-  pass-wofi = pkgs.pass-wofi.override { inherit pass; };
+  #pass = config.programs.password-store.package;
+  #passEnabled = config.programs.password-store.enable;
+  #pass-wofi = pkgs.pass-wofi.override { inherit pass; };
 in
 {
   home.packages = [ wofi ] ++

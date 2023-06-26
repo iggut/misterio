@@ -4,7 +4,7 @@ in
 {
   users.mutableUsers = false;
   users.users.iggut = {
-    password = "nixos";
+    initialPassword = "nixos";
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups = [

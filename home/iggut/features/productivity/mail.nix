@@ -2,7 +2,7 @@
 
 let
   mbsync = "${config.programs.mbsync.package}/bin/mbsync";
-  pass = "${config.programs.password-store.package}/bin/pass";
+  #pass = "${config.programs.password-store.package}/bin/pass";
 
   common = rec {
     realName = "Igor G.";
