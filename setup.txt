@@ -1,84 +1,76 @@
 sudo -i
-MNTPOINT=/mnt
+
+# Partitioning
+
+# We create a 512MB EFI boot partition (/dev/nvme0n1p1) and the rest will be our LUKS encrypted physical volume for LVM (/dev/nvme0n1p2).
+
+gdisk /dev/nvme0n1
+o (create new empty partition table)
+n (add partition, 512M, type ef00 EFI)
+n (add partition, remaining space, type 8e00 Linux LVM)
+w (write partition table and exit)
+
+# Setup the encrypted LUKS partition and open it:
+
+cryptsetup luksFormat /dev/nvme1n1p2
+cryptsetup config /dev/nvme1n1p2 --label cryptroot
 cryptsetup luksOpen /dev/nvme1n1p2 enc
 
+# We create two logical volumes, a 24GB swap parition and the rest will be our root filesystem
+
+pvcreate /dev/mapper/enc
+vgcreate lvm /dev/mapper/enc
+lvcreate -L 24G -n swap lvm
+lvcreate -l '100%FREE' -n root lvm
+
 # Format partitions
+
 mkfs.fat -F 32 -n boot /dev/nvme1n1p1
 mkswap -L swap /dev/lvm/swap
 swapon /dev/lvm/swap
 mkfs.btrfs -L root /dev/lvm/root
 
+# Mount partitions
+
 mount -t btrfs /dev/lvm/root /mnt
+
 # Create the subvolumes
+
 btrfs subvolume create /mnt/root
-btrfs subvolume create /mnt/persist
+btrfs subvolume create /mnt/home
 btrfs subvolume create /mnt/nix
+btrfs subvolume create /mnt/log
 
 umount /mnt
 
 # Mount the directories
-mount -o subvol=root,compress=zstd,noatime /dev/lvm/root /mnt
-mkdir -p /mnt/persist/var/{log,lib/{nixos,systemd}}
-mount -o subvol=persist,compress=zstd /dev/lvm/root /mnt/persist
-mount -o subvol=nix,compress=zstd,noatime /dev/lvm/root /mnt/nix
+
+mount -o subvol=root,compress=zstd,noatime,ssd,space_cache=v2 /dev/lvm/root /mnt
+mkdir -p /mnt/{home,nix,var/log}
+mount -o subvol=home,compress=zstd,noatime,ssd,space_cache=v2 /dev/lvm/root /mnt/home
+mount -o subvol=nix,compress=zstd,noatime,ssd,space_cache=v2 /dev/lvm/root /mnt/nix
+mount -o subvol=log,compress=zstd,noatime,ssd,space_cache=v2 /dev/lvm/root /mnt/var/log
 
 # Mount boot partition
+
 mkdir /mnt/boot
 mount /dev/nvme1n1p1 /mnt/boot
 
+# Enable flakes
+
 nix-shell -p nixFlakes
-sudo nixos-install --flake /home/iggut/nix-config-main#gaminix
 
-home-manager switch --flake /home/iggut/nix-config-main#gaminix
+# Install nixos from flake
 
-home-manager switch --flake 'github:rxyhn/yuki#rxyhn@lenovo'
+sudo nixos-install --flake 'github:iggut/misterio#gaminix'
+home-manager switch --flake 'github:iggut/misterio#iggut@gaminix'
 
-[nix-shell:~]# sudo nixos-install --flake /home/nixos/nix-config-main#gaminix
-copying channel...
-building the flake in path:/home/nixos/nix-config-main?lastModified=1687639554&narHash=sha256-%2fCtTmmdvHJ13TOoGDmL+LkEZHsHn2XEK4pmpoj+emtA=...
-installing the boot loader...
-setting up secrets for users...
-/nix/store/49nwpinfb8r5zx34qw92ly341jjy2izw-sops-install-secrets-0.0.1/bin/sops-install-secrets: Cannot read ssh key '/persist/etc/ssh/ssh_host_ed25519_key': open /persist/etc/ssh/ssh_host_ed25519_key: no such file or directory
-Activation script snippet 'setupSecretsForUsers' failed (1)
-warning: password file ‘/run/secrets-for-users/iggut-password’ does not exist
-Warning: Source directory '/persist/var' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-Warning: Source directory '/persist/var/lib' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-Warning: Source directory '/persist/var/lib/acme' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-Warning: Source directory '/persist/var/lib/systemd' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-Warning: Source directory '/persist/var/lib/nixos' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-Warning: Source directory '/persist/var/log' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-Warning: Source directory '/persist/srv' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-Warning: Source directory '/persist/var/lib/containers' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-Warning: Source directory '/persist/var/lib/tailscale' does not exist; it will be created for you with the following permissions: owner: 'root:root', mode: '0755'.
-setting up /etc...
-Initializing machine ID from random generator.
-Created "/boot/EFI".
-Created "/boot/EFI/systemd".
-Created "/boot/EFI/BOOT".
-Created "/boot/loader".
-Created "/boot/loader/entries".
-Created "/boot/EFI/Linux".
-Copied "/nix/store/9adpz6y8s4mgkxfhc9rzy25r7f3wdyll-systemd-253.5/lib/systemd/boot/efi/systemd-bootx64.efi" to "/boot/EFI/systemd/systemd-bootx64.efi".
-Copied "/nix/store/9adpz6y8s4mgkxfhc9rzy25r7f3wdyll-systemd-253.5/lib/systemd/boot/efi/systemd-bootx64.efi" to "/boot/EFI/BOOT/BOOTX64.EFI".
-Random seed file /boot/loader/random-seed successfully written (32 bytes).
-Successfully initialized system token in EFI variable with 32 bytes.
-Created EFI boot entry "Linux Boot Manager".
-setting up secrets for users...
-/nix/store/49nwpinfb8r5zx34qw92ly341jjy2izw-sops-install-secrets-0.0.1/bin/sops-install-secrets: Cannot read ssh key '/persist/etc/ssh/ssh_host_ed25519_key': open /persist/etc/ssh/ssh_host_ed25519_key: no such file or directory
-Activation script snippet 'setupSecretsForUsers' failed (1)
-warning: password file ‘/run/secrets-for-users/iggut-password’ does not exist
-setting up /etc...
-setting up secrets for users...
-/nix/store/49nwpinfb8r5zx34qw92ly341jjy2izw-sops-install-secrets-0.0.1/bin/sops-install-secrets: Cannot read ssh key '/persist/etc/ssh/ssh_host_ed25519_key': open /persist/etc/ssh/ssh_host_ed25519_key: no such file or directory
-Activation script snippet 'setupSecretsForUsers' failed (1)
-warning: password file ‘/run/secrets-for-users/iggut-password’ does not exist
-setting up /etc...
-setting root password...
-New password: 
-Retype new password: 
-passwd: password updated successfully
-installation finished!
+sudo nixos-install --flake 'github:iggut/misterio#gs66'
+home-manager switch --flake 'github:iggut/misterio#iggut@gs66'
 
+# Local
+sudo nixos-install --flake /home/nixos/nix-config-main#gaminix
+home-manager switch --flake /home/nixos/nix-config-main#iggut@gaminix
 
-
-
+sudo nixos-install --flake /home/nixos/nix-config-main#gs66
+home-manager switch --flake /home/nixos/nix-config-main#iggut@gs66
