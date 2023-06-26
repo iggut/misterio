@@ -17,8 +17,12 @@
     ../common/optional/lol-acfix.nix
   ];
 
+  # TODO: theme "greeter" user GTK instead of using iggut to login
+  services.greetd.settings.default_session.user = "iggut";
+
   networking = {
     hostName = "gs66";
+    useDHCP = true;
   };
 
   boot = {
@@ -31,6 +35,16 @@
     adb.enable = true;
     dconf.enable = true;
     kdeconnect.enable = true;
+    _1password.enable = true;
+    _1password-gui.enable = true;
+    _1password-gui.polkitPolicyOwners = [ "iggut" "root" ];
+    partition-manager.enable = true;
+    thunar.enable = true;
+    thunar.plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-volman
+      thunar-media-tags-plugin
+    ];
   };
 
   # Lid settings
