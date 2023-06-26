@@ -70,9 +70,13 @@ in
 
   # Startup
   exec-once=waybar
+  exec-once=sfwbar
   exec=swaybg -i ${wallpaper} --mode fill
   exec-once=mako
   exec-once=swayidle -w
+
+  monitor = DP-1,1920x1080@165,0x0,1
+  monitor = HDMI-A-1,2560x1440@60,1920x0,1
 
   $files = thunar
   $browser = firefox

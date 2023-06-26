@@ -37,13 +37,6 @@ in
   programs = {
     home-manager.enable = true;
     git.enable = true;
-    partition-manager.enable = true;
-    programs.thunar.enable = true;
-    programs.thunar.plugins = with pkgs.xfce; [
-      thunar-archive-plugin
-      thunar-volman
-      thunar-media-tags-plugin
-    ];
   };
 
   home = {
@@ -52,18 +45,18 @@ in
     stateVersion = lib.mkDefault "23.05";
     sessionPath = [ "$HOME/.local/bin" ];
 
-    persistence = {
-      "/persist/home/iggut" = {
-        directories = [
-          "Documents"
-          "Downloads"
-          "Pictures"
-          "Videos"
-          ".local/bin"
-        ];
-        allowOther = true;
-      };
-    };
+    #persistence = {
+    #  "/persist/home/iggut" = {
+    #    directories = [
+    #      "Documents"
+    #      "Downloads"
+    #      "Pictures"
+    #      "Videos"
+    #      ".local/bin"
+    #    ];
+    #    allowOther = true;
+    #  };
+    #};
   };
 
   colorscheme = lib.mkDefault colorSchemes.dracula;

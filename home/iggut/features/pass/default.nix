@@ -12,7 +12,7 @@
   #  extraArgs = [ "-e${config.programs.password-store.package}/bin/pass" ];
   #};
 
-  home.persistence = {
-    "/persist/home/iggut".directories = [ ".password-store" ];
-  };
+  #home.persistence = {
+  #  "/persist/home/iggut".directories = [ ".password-store" ];
+  #};
 }

@@ -15,12 +15,12 @@ let
 in {
   home.packages = [ runescape ];
 
-  home.persistence = {
-    "/persist/home/iggut" = {
-      allowOther = true;
-      directories = [
-        "Jagex"
-      ];
-    };
-  };
+  #home.persistence = {
+  #  "/persist/home/iggut" = {
+  #    allowOther = true;
+  #    directories = [
+  #      "Jagex"
+  #    ];
+  #  };
+  #};
 }

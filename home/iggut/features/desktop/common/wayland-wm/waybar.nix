@@ -40,29 +40,10 @@ in
     enable = true;
     settings = {
 
-      secondary = {
-        mode = "dock";
-        layer = "top";
-        height = 32;
-        width = 100;
-        margin = "6";
-        position = "bottom";
-        modules-center = (lib.optionals config.wayland.windowManager.sway.enable [
-          "sway/workspaces"
-          "sway/mode"
-        ]) ++ (lib.optionals config.wayland.windowManager.hyprland.enable [
-          "wlr/workspaces"
-        ]);
-
-        "wlr/workspaces" = {
-          on-click = "activate";
-        };
-      };
-
       primary = {
         mode = "dock";
         layer = "top";
-        height = 40;
+        height = 32;
         margin = "6";
         position = "top";
         output = builtins.map (m: m.name) (builtins.filter (m: ! m.noBar) config.monitors);
@@ -77,15 +58,11 @@ in
           "memory"
           "clock"
           "pulseaudio"
-          "custom/unread-mail"
-          "custom/gammastep"
-          "custom/gpg-agent"
         ];
         modules-right = [
           "custom/gamemode"
+          "idle_inhibitor"
           "network"
-          "custom/tailscale-ping"
-          "battery"
           "tray"
           "custom/hostname"
         ];

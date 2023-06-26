@@ -21,7 +21,7 @@ in
     #};
   };
 
-  home.persistence = {
-    "/persist/home/iggut".directories = [ ".ssh" ];
-  };
+  #home.persistence = {
+  #  "/persist/home/iggut".directories = [ ".ssh" ];
+  #};
 }

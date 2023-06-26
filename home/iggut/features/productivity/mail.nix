@@ -22,9 +22,9 @@ let
   };
 in
 {
-  home.persistence = {
-    "/persist/home/iggut".directories = [ "Mail" ];
-  };
+  #home.persistence = {
+  #  "/persist/home/iggut".directories = [ "Mail" ];
+  #};
 
   accounts.email = {
     maildirBasePath = "Mail"; #todo

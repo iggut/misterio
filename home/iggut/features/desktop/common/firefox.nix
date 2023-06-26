@@ -33,10 +33,10 @@ in
 
   home = {
     sessionVariables.BROWSER = "firefox";
-    persistence = {
+    #persistence = {
       # Not persisting is safer
       # "/persist/home/iggut".directories = [ ".mozilla/firefox" ];
-    };
+    #};
   };
 
   xdg.mimeApps.defaultApplications = {

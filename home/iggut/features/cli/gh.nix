@@ -8,7 +8,7 @@
       prompt = "enabled";
     };
   };
-  home.persistence = {
-    "/persist/home/iggut".directories = [ ".config/gh" ];
-  };
+  #home.persistence = {
+  #  "/persist/home/iggut".directories = [ ".config/gh" ];
+  #};
 }
