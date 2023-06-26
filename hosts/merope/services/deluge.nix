@@ -36,10 +36,10 @@
     allowedTCPPorts = [ 58846 ];
   };
 
-  environment.persistence = {
-    "/persist".directories = [
-      "/var/lib/deluge"
-      "/srv/torrents"
-    ];
-  };
+  #environment.persistence = { 
+  #  "/persist".directories = [
+  #    "/var/lib/deluge"
+  #    "/srv/torrents"
+  #  ];
+  #};
 }

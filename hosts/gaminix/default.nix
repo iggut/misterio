@@ -52,6 +52,16 @@
     adb.enable = true;
     dconf.enable = true;
     kdeconnect.enable = true;
+    _1password.enable = true;
+    _1password-gui.enable = true;
+    _1password-gui.polkitPolicyOwners = [ "iggut" "root" ];
+    partition-manager.enable = true;
+    thunar.enable = true;
+    thunar.plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-volman
+      thunar-media-tags-plugin
+    ];
   };
 
   xdg.portal = {

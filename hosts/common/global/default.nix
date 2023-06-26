@@ -8,7 +8,7 @@
     ./locale.nix
     ./nix.nix
     ./openssh.nix
-    ./optin-persistence.nix
+    #./optin-persistence.nix
     ./podman.nix
     #./sops.nix #todo
     ./ssh-serve-store.nix

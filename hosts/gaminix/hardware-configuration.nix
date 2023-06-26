@@ -23,6 +23,27 @@
       fsType = "vfat";
     };
 
+######
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/c56097e9-54c1-491f-84b5-20e44bd762b7";
+      fsType = "btrfs";
+      options = [ "subvol=root" "compress=zstd" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/c56097e9-54c1-491f-84b5-20e44bd762b7";
+      fsType = "btrfs";
+      options = [ "subvol=nix" "compress=zstd" "noatime" ];
+    };
+
+  fileSystems."/persist" =
+    { device = "/dev/disk/by-uuid/c56097e9-54c1-491f-84b5-20e44bd762b7";
+      fsType = "btrfs";
+      options = [ "subvol=persist" "compress=zstd" ];
+      neededForBoot = true;
+    };
+######
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/bb5e6e21-9252-4d92-bd4a-9cfabaabd6ec"; }
     ];
