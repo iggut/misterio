@@ -34,6 +34,7 @@
   };
 
   networking = {
+    networkmanager.enable = true;
     hostName = "gaminix";
     useDHCP = true;
     interfaces.enp7s0 = {
