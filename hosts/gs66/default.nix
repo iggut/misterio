@@ -21,6 +21,7 @@
   services.greetd.settings.default_session.user = "iggut";
 
   networking = {
+    networkmanager.enable = true;
     hostName = "gs66";
     useDHCP = true;
   };
