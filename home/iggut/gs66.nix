@@ -5,7 +5,7 @@
     ./features/desktop/hyprland
     ./features/desktop/wireless
     ./features/productivity
-    ./features/pass
+    #./features/pass
     ./features/games
   ];
 

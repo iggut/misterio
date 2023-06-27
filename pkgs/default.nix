@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { } }: rec {
 
   # Packages with an actual source
-  rgbdaemon = pkgs.callPackage ./rgbdaemon { };
+  #rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
   trekscii = pkgs.callPackage ./trekscii { };
   speedtestpp = pkgs.callPackage ./speedtestpp { };
@@ -11,7 +11,7 @@
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava { };
-  pass-wofi = pkgs.callPackage ./pass-wofi { };
+  #pass-wofi = pkgs.callPackage ./pass-wofi { };
   primary-xwayland = pkgs.callPackage ./primary-xwayland { };
   sfwbar = pkgs.callPackage ./sfwbar { }; 
   wl-mirror-pick = pkgs.callPackage ./wl-mirror-pick { };

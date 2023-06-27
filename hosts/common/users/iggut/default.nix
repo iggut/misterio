@@ -58,6 +58,7 @@ in
       vulkan-tools
       wdisplays # Displays manager
       wlogout # Logout screen
+      xdg-utils
     ];
   };
 

@@ -10,7 +10,7 @@
     ../common/users/iggut
 
     ../common/optional/gamemode.nix
-    #../common/optional/wireless.nix
+    ../common/optional/wireless.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
@@ -19,6 +19,18 @@
 
   # TODO: theme "greeter" user GTK instead of using iggut to login
   services.greetd.settings.default_session.user = "iggut";
+
+  services = {
+    gnome.gnome-keyring.enable = true;
+    flatpak.enable = true;
+    printing.enable = true;
+    printing.drivers = [
+      #pkgs.cnijfilter2
+      #pkgs.cnijfilter_4_00
+      pkgs.gutenprint
+      pkgs.gutenprintBin
+    ];
+  };
 
   networking = {
     hostName = "gs66";

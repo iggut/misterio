@@ -10,43 +10,13 @@
     fallbackToWPA2 = false;
     # Declarative
     #environmentFile = config.sops.secrets.wireless.path; #todo
-    /*
-    networks = {
-      "JVGCLARO" = {
-        psk = "@JVGCLARO@";
-      };
-      "Kartodrorealm" = {
-        psk = "@KARTODROREALM@";
-      };
-      "Kartodrorealm-5G" = {
-        psk = "@KARTODROREALM@";
-      };
-      "Marcos_2.4Ghz" = {
-        pskRaw = "@MARCOS_24@";
-      };
-      "Marcos_5Ghz" = {
-        pskRaw = "@MARCOS_50@";
-      };
 
-      "VIVOFIBRA-FC41-5G" = {
-        pskRaw = "@MARCOS_SANTOS_5G@";
-      };
-      "zoocha" = {
-        pskRaw = "@ZOOCHA@";
-      };
-      "eduroam" = {
-        auth = ''
-          key_mgmt=WPA-EAP
-          pairwise=CCMP
-          auth_alg=OPEN
-          eap=PEAP
-          identity="10856803@usp.br"
-          password="@EDUROAM@"
-          phase2="auth=MSCHAPV2"
-        '';
+    networks = {
+      "VK24" = {
+        psk = "oecbg23531";
       };
     };
-    */
+
 
     # Imperative
     allowAuxiliaryImperativeNetworks = true;
