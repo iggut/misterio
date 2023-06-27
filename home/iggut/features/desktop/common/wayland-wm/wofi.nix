@@ -11,7 +11,7 @@ let
   #pass-wofi = pkgs.pass-wofi.override { inherit pass; };
 in
 {
-  home.packages = [ wofi ] #++
+  home.packages = [ wofi ]; #++
     #(lib.optional passEnabled pass-wofi);
 
   xdg.configFile."wofi/config".text = ''
