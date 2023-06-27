@@ -39,18 +39,6 @@ in
     git.enable = true;
   };
 
-  services = {
-    gnome.gnome-keyring.enable = true;
-    flatpak.enable = true;
-    printing.enable = true;
-    printing.drivers = [
-      #pkgs.cnijfilter2
-      #pkgs.cnijfilter_4_00
-      pkgs.gutenprint
-      pkgs.gutenprintBin
-    ];
-  };
-
   home = {
     username = lib.mkDefault "iggut";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
