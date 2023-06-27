@@ -37,6 +37,8 @@ in
   programs = {
     home-manager.enable = true;
     git.enable = true;
+    git.userName = "Igor G.";
+    git.userEmail = "igor.gutchin@gmail.com";
   };
 
   home = {
