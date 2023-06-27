@@ -24,10 +24,10 @@ in
     protontricks
   ];
 
-  programs.steam = {
-    enable = true;
-    gamescopeSession.enable = true;
-  };
+  #programs.steam = {
+  #  enable = true;
+  #  gamescopeSession.enable = true;
+  #};
 
   programs.mangohud = {
     enable = true;
