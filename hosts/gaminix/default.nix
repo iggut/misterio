@@ -56,6 +56,8 @@
     _1password-gui.enable = true;
     _1password-gui.polkitPolicyOwners = [ "iggut" "root" ];
     partition-manager.enable = true;
+    xfconf.enable = true;
+    nm-applet.enable = true; # Network manager tray icon 
     thunar.enable = true;
     thunar.plugins = with pkgs.xfce; [
       thunar-archive-plugin
