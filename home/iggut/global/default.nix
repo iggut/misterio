@@ -37,10 +37,7 @@ in
   programs = {
     home-manager.enable = true;
     git.enable = true;
-    #nm-applet.enable = true; # Network manager tray icon 
   };
-
-  programs.xfconf.enable = true;
 
   services = {
     gnome.gnome-keyring.enable = true;
