@@ -1,5 +1,5 @@
 # This file (and the global directory) holds config that i use on all hosts
-{ inputs, outputs, ... }: {
+{pkgs, inputs, outputs, ... }: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ./acme.nix
@@ -61,7 +61,7 @@
   # Enable the smartcard daemon
   hardware.gpgSmartcards.enable = true;
   services.pcscd.enable = true;
-  services.udev.packages = [pkgs.yubikey-personalization];
+  services.udev.packages = with pkgs; [ libu2f-host yubikey-personalization ];
   
   # Configure as challenge-response for instant login,
   # can't provide the secrets as the challenge gets updated

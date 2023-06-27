@@ -11,8 +11,8 @@ let
   #pass-wofi = pkgs.pass-wofi.override { inherit pass; };
 in
 {
-  home.packages = [ wofi ] ++
-    (lib.optional passEnabled pass-wofi);
+  home.packages = [ wofi ]; #++
+    #(lib.optional passEnabled pass-wofi);
 
   xdg.configFile."wofi/config".text = ''
     image_size=48
