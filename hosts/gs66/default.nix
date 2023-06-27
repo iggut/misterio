@@ -60,8 +60,11 @@
   hardware = {
     nvidia = {
       prime.offload.enable = true;
+      prime.intelBusId = "PCI:0:2:0";
+      prime.nvidiaBusId = "PCI:1:0:0";
       modesetting.enable = true;
     };
+
     opengl = {
       enable = true;
       driSupport = true;
