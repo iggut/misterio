@@ -26,7 +26,6 @@ in
 
   programs.steam = {
     enable = true;
-    package = pkgs.steam-with-pkgs;
     gamescopeSession.enable = true;
   };
 
