@@ -60,10 +60,10 @@ in
   };
 
   #Enable Gamescope
-  programs.gamescope = {
-    enable = true;
+  #programs.gamescope = {
+    #enable = true;
     #package = pkgs.gamescope_git;
-    capSysNice = true;
+    #capSysNice = true;
     #args = ["--prefer-vk-device 10de:1f15"];
     #env = {
     #  "DRI_PRIME" = "1";
@@ -72,7 +72,7 @@ in
     #  "__GLX_VENDOR_LIBRARY_NAME" = "nvidia";
     #  "MESA_VK_DEVICE_SELECT" = "pci:10de:1f15";
     #};
-  };
+  #};
 
   #home.persistence = {
   #  "/persist/home/iggut" = {
