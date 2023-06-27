@@ -23,7 +23,7 @@
   networking = {
     networkmanager.enable = true;
     hostName = "gs66";
-    #useDHCP = true;
+    useDHCP = false;
   };
 
   boot = {
